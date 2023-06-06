@@ -8,18 +8,18 @@ import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
-public class DigitalEnvelope {
+public class DigitalEnvelopeManage {
     private Cryptogram cryptogram;
     private Key secretKey;
 
 
-    public void encrypt(byte[] data, Key key) {
+    public byte[] encrypt(byte[] data, Key key) {
         byte[] encrypted = null;
         Cipher c1 = null;
         try {
             c1 = Cipher.getInstance("RSA");
             c1.init(Cipher.ENCRYPT_MODE, key);
-            c1.doFinal(data);
+            encrypted = c1.doFinal(data);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e1) {
             e1.printStackTrace();
         } catch (InvalidKeyException e1) {
@@ -29,10 +29,11 @@ public class DigitalEnvelope {
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
+        return encrypted;
     }
 
-    public void decrypt(byte[] data, Key key) {
-        byte[] encrypted = null;
+    public byte[] decrypt(byte[] data, Key key) {
+        byte[] decrypted = null;
         Cipher c1 = null;
         try {
             c1 = Cipher.getInstance("RSA");
@@ -47,5 +48,6 @@ public class DigitalEnvelope {
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
+        return decrypted;
     }
 }

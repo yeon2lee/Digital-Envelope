@@ -77,4 +77,17 @@ public class AsymmetricKeyManage {
         }
         return key;
     }
+
+    public Key bytesToKey(byte[] byteKey) {
+        Key key = null;
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(byteKey);
+             ObjectInput in = new ObjectInputStream(bis)) {
+            key = (Key) in.readObject();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+        return key;
+    }
 }
