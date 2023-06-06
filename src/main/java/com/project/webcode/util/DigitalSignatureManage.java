@@ -2,7 +2,7 @@ package com.project.webcode.util;
 
 import java.security.*;
 
-public class DigitalSignature {
+public class DigitalSignatureManage {
     byte[] data;
     PublicKey publicKey;
     PrivateKey privateKey;
