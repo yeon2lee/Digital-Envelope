@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>키 생성</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="p-5 mb-5 text-center</> bg-light">
+    <h1 class="mb-3">Generate Keys</h1>
+    <h4 class="mb-3">..</h4>
+</div>
+
+<div class="container">
+    <form role="form" action="/keys/new" th:object="${keyForm}" method="post">
+        <div class="form-group">
+            <label th:for="name">이름</label>
+            <input type="text" th:field="*{name}" class="form-control"
+                   placeholder="이름을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label th:for="secretKeyPath">secret key를 저장할 파일 이름</label>
+            <input type="text" th:field="*{secretKeyPath}" class="form-control"
+                   placeholder="내용을 입력하세요">
+        </div>
+
+        <div class="form-group">
+            <label th:for="publicKeyPath">public key를 저장할 파일 이름</label>
+            <input type="text" th:field="*{publicKeyPath}" class="form-control"
+                   placeholder="내용을 입력하세요">
+        </div>
+
+        <div class="form-group">
+            <label th:for="privateKeyPath">private key를 저장할 파일 이름</label>
+            <input type="text" th:field="*{privateKeyPath}" class="form-control"
+                   placeholder="내용을 입력하세요">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <br/>
+</div> <!-- /container -->
+
+</body>
