@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>전자봉투 생성</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+</head>
+<body>
+<div class="p-5 mb-5 text-center</> bg-light">
+    <h1 class="mb-3">Open Digital Envelope</h1>
+    <h4 class="mb-3">..</h4>
+</div>
+
+<div class="container">
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>보내는 사람</th>
+            <th>받는 사람</th>
+            <th>메세지</th>
+            <th>검증 결과</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${envelopeRes.receiver}"></td>
+            <td th:text="${envelopeRes.sender}"></td>
+            <td th:text="${envelopeRes.message}"></td>
+            <td th:text="${envelopeRes.verify}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div> <!-- /container -->
+
+</body>

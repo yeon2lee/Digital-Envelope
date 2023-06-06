@@ -1,9 +1,8 @@
 package com.project.webcode.util;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
+import javax.crypto.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
@@ -17,7 +16,7 @@ public class DigitalEnvelopeManage {
         byte[] encrypted = null;
         Cipher c1 = null;
         try {
-            c1 = Cipher.getInstance("RSA");
+            c1 = Cipher.getInstance(key.getAlgorithm());
             c1.init(Cipher.ENCRYPT_MODE, key);
             encrypted = c1.doFinal(data);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e1) {
@@ -29,6 +28,16 @@ public class DigitalEnvelopeManage {
         } catch (BadPaddingException e) {
             e.printStackTrace();
         }
+
+        try (FileOutputStream bos = new FileOutputStream("encrypted.bin");
+             CipherOutputStream cos = new CipherOutputStream(bos, c1)) {
+
+            cos.write(data);
+            cos.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         return encrypted;
     }
 
@@ -36,9 +45,9 @@ public class DigitalEnvelopeManage {
         byte[] decrypted = null;
         Cipher c1 = null;
         try {
-            c1 = Cipher.getInstance("RSA");
+            c1 = Cipher.getInstance(key.getAlgorithm());
             c1.init(Cipher.DECRYPT_MODE, key);
-            c1.doFinal(data);
+            decrypted = c1.doFinal(data);
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e1) {
             e1.printStackTrace();
         } catch (InvalidKeyException e1) {

@@ -8,9 +8,10 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnvelopeDto {
+public class EnvelopeRes {
 
     private String sender;
     private String receiver;
     private String message;
+    private boolean verify;
 }

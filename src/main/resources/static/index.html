@@ -1,17 +1,25 @@
-<html>
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>전자봉투 생성</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
 </head>
 <body>
-<ul>
-    <li>전자봉투 시스템
-        <ul>
-            <li><a href="/keys/new">키 생성</a></li>
-            <li><a href="/envelope/send">전자 봉투 보내기</a></li>
-            <li><a href="/envelope">나에게 온 전자 봉투 확인</a></li>
-        </ul>
-    </li>
-</ul>
+<br/><br/><br/>
+<div class="container">
+    <div class="jumbotron">
+        <h3>전자 봉투 시스템</h3></br>
+        <p class="lead">Keys</p>
+        <p>
+            <a class="btn btn-outline-dark" href="/keys/new">키 생성</a>
+        </p>
+        <p class="lead">Digital Envelope</p>
+        <p>
+            <a class="btn btn-outline-primary" href="/envelopes/new">전자 봉투 보내기</a>
+            <a class="btn btn-outline-primary" href="/envelopes">나에게 온 전자봉투 확인</a>
+        </p>
+    </div>
+</div> <!-- /container -->
 </body>
 </html>
