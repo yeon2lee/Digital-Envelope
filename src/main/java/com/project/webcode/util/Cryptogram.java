@@ -4,12 +4,13 @@ import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
+import java.io.Serializable;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 
-public class Cryptogram {
+public class Cryptogram implements Serializable {
     private byte[] data;
     private byte[] signature;
     private PublicKey publicKey;

@@ -7,29 +7,29 @@
 </head>
 <body>
 <div class="p-5 mb-5 text-center</> bg-light">
-    <h1 class="mb-3">Generate Keys</h1>
+    <h1 class="mb-3">Send Digital Envelope</h1>
     <h4 class="mb-3">..</h4>
 </div>
 
 <div class="container">
-    <form role="form" action="/envelopes/new" method="post">
+    <form role="form" action="/envelopes/new" th:object="${envelopeForm}" method="post">
         <div class="form-group">
-            <label th:for="name">보내는 사람</label>
-            <input type="text" th:field="*{name}" class="form-control"
+            <label th:for="sender">보내는 사람</label>
+            <input type="text" th:field="*{sender}" class="form-control"
                    placeholder="이름을 입력하세요">
         </div>
         <div class="form-group">
-            <label for="member">받는 사람</label>
-            <select name="memberId" id="member" class="form-control">
+            <label for="receiver">받는 사람</label>
+            <select name="receiver" id="receiver" th:field="*{receiver}" class="form-control">
                 <option value="">받는 사람 선택</option>
                 <option th:each="member : ${members}"
-                        th:value="${member.id}"
+                        th:value="${member.name}"
                         th:text="${member.name}" />
             </select>
         </div>
         <div class="form-group">
-            <label th:for="name">전달할 메세지</label>
-            <input type="text" th:field="*{name}" class="form-control"
+            <label th:for="message">전달할 메세지</label>
+            <input type="text" th:field="*{message}" class="form-control"
                    placeholder="메세지를 입력하세요">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>

@@ -59,9 +59,10 @@ public class SymmetricKeyManage {
 
     public Key bytesToKey(byte[] byteKey) {
         Key key = null;
-        try (ByteArrayInputStream bis = new ByteArrayInputStream(byteKey);
-            ObjectInput in = new ObjectInputStream(bis)) {
-                key = (Key) in.readObject();
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(byteKey)) {
+            try (ObjectInput in = new ObjectInputStream(bis)) {
+                    key = (Key) in.readObject();
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {

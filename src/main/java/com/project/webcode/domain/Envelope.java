@@ -16,11 +16,11 @@ public class Envelope {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "sender_id")
     private Member sender;
 
     @ManyToOne
-    @JoinColumn(name = "member_id")
+    @JoinColumn(name = "receiver_id")
     private Member receiver;
 
     private byte[] data;

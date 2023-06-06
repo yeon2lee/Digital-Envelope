@@ -2,10 +2,7 @@ package com.project.webcode.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.security.PublicKey;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -24,4 +21,7 @@ public class Member  {
     private String secretKeyPath;
     private String publicKeyPath;
     private String privateKeyPath;
+
+    @OneToOne(mappedBy = "member")
+    private PublicKeys publicKeys;
 }

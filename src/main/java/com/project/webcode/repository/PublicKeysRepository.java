@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PublicKeysRepository extends JpaRepository<PublicKeys, Long> {
-    @Query("select m from PublicKeys p left join fetch p.member m")
+    @Query("select p.member from PublicKeys p")
     List<Member> findMemberFetchJoin();
 
     @Query("select p.publicKey from PublicKeys p left join p.member m where m.name = :name")
