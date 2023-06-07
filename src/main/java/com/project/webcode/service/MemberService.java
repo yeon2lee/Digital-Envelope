@@ -25,24 +25,26 @@ public class MemberService  {
 
     // 키 생성 및 저장
     public Member saveKeys(KeyGenerateReq keyGenerateReq) {
-        // 키 생성 및 저장
-        SymmetricKeyManage symmetricKeyManage = new SymmetricKeyManage();
-        Key key = symmetricKeyManage.create();
-        symmetricKeyManage.save(keyGenerateReq.getSecretKeyPath());
+        // secret key 생성 및 로컬에 저장
+        SymmetricKeyManage skm = new SymmetricKeyManage();
+        skm.create();
+        skm.save(keyGenerateReq.getSecretKeyPath());
 
-        AsymmetricKeyManage asymmetricKeyManage = new AsymmetricKeyManage();
-        asymmetricKeyManage.create();
-        PublicKey tmpKey = asymmetricKeyManage.savePublicKey(keyGenerateReq.getPublicKeyPath());
-        byte[] publicKey = tmpKey.getEncoded();
-        asymmetricKeyManage.savePrivateKey(keyGenerateReq.getPrivateKeyPath());
+        // private key와 public key 생성 및 로컬에 저장
+        AsymmetricKeyManage akm = new AsymmetricKeyManage();
+        akm.create();
+        akm.savePrivateKey(keyGenerateReq.getPrivateKeyPath());
+        PublicKey publicKey = akm.savePublicKey(keyGenerateReq.getPublicKeyPath());
 
-        // Member에 저장
-        Member saved = memberRepository.save(keyGenerateReq.toEntity());
 
-        // PublicKeys에 저장
-        publicKeysRepository.save(new PublicKeys(publicKey, saved));
+        // Member 테이블에 사용자가 로컬에 키를 저장한 경로를 등록 (서버에 저장)
+        Member member = memberRepository.save(keyGenerateReq.toEntity());
 
-        return saved;
+        // PublicKeys 테이블에 저장 (서버에 저장)
+        byte[] bPublicKey = publicKey.getEncoded();
+        publicKeysRepository.save(new PublicKeys(bPublicKey, member));
+
+        return member;
     }
 
 
