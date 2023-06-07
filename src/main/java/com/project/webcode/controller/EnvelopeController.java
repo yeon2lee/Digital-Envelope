@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -26,19 +25,19 @@ public class EnvelopeController {
 
     @GetMapping("/envelopes/new")
     public String createForm(Model model) {
-        model.addAttribute("envelopeForm", new EnvelopeDto());
+        model.addAttribute("envelopeForm", new EnvelopeReq());
         List<Member> members = envelopeService.findMembers();
         model.addAttribute("members", members);
         return "envelope/createEnvelopeForm";
     }
 
     @PostMapping("/envelopes/new")
-    public String create(@Valid EnvelopeDto envelopeForm, BindingResult result) {
+    public String create(@Valid EnvelopeReq envelopeForm, BindingResult result) {
         if (result.hasErrors()) {
             return "envelope/createEnvelopeForm";
         }
-        EnvelopeDto envelopeDto = new EnvelopeDto(envelopeForm.getSender(), envelopeForm.getReceiver(), envelopeForm.getMessage());
-        envelopeService.createEnvelope(envelopeDto);
+        EnvelopeReq envelopeReq = new EnvelopeReq(envelopeForm.getSender(), envelopeForm.getReceiver(), envelopeForm.getMessage());
+        envelopeService.createEnvelope(envelopeReq);
         return "redirect:/";
     }
 

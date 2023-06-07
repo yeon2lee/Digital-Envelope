@@ -1,14 +1,11 @@
 package com.project.webcode.util;
 
 import javax.crypto.*;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 public class DigitalEnvelopeManage {
-    private Cryptogram cryptogram;
     private Key secretKey;
 
 
@@ -26,15 +23,6 @@ public class DigitalEnvelopeManage {
         } catch (IllegalBlockSizeException e) {
             e.printStackTrace();
         } catch (BadPaddingException e) {
-            e.printStackTrace();
-        }
-
-        try (FileOutputStream bos = new FileOutputStream("encrypted.bin");
-             CipherOutputStream cos = new CipherOutputStream(bos, c1)) {
-
-            cos.write(data);
-            cos.flush();
-        } catch (IOException e) {
             e.printStackTrace();
         }
 

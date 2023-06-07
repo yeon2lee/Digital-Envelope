@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class EnvelopeDto {
+public class EnvelopeReq {
 
     private String sender;
     private String receiver;

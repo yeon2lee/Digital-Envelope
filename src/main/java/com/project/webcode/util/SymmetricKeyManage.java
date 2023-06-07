@@ -1,11 +1,12 @@
 package com.project.webcode.util;
 
 import javax.crypto.KeyGenerator;
+import javax.crypto.spec.SecretKeySpec;
 import java.io.*;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
-public class SymmetricKeyManage {
+public class SymmetricKeyManage implements KeyManage {
     private Key secretKey;
 
     public Key create() {
@@ -24,22 +25,24 @@ public class SymmetricKeyManage {
         return secretKey;
     }
     public Key save(String fileName) {
-        if (secretKey == null) {
-            return null;
-        }
+        return save(fileName, secretKey);
+    }
 
+    @Override
+    public Key save(String fileName, Key key) {
         try (FileOutputStream fstream = new FileOutputStream(fileName)) {
             try (ObjectOutputStream ostream = new ObjectOutputStream(fstream)) {
-                ostream.writeObject(secretKey);
+                ostream.writeObject(key);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return secretKey;
+        return key;
     }
 
+    @Override
     public Key load(String fileName) {
         try (FileInputStream fis = new FileInputStream(fileName)) {
             try (ObjectInputStream ois = new ObjectInputStream(fis)) {
@@ -57,17 +60,8 @@ public class SymmetricKeyManage {
         return secretKey;
     }
 
+    @Override
     public Key bytesToKey(byte[] byteKey) {
-        Key key = null;
-        try (ByteArrayInputStream bis = new ByteArrayInputStream(byteKey)) {
-            try (ObjectInput in = new ObjectInputStream(bis)) {
-                    key = (Key) in.readObject();
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-        return key;
+        return new SecretKeySpec(byteKey, "AES");
     }
 }

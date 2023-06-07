@@ -2,8 +2,10 @@ package com.project.webcode.util;
 
 import java.io.*;
 import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.X509EncodedKeySpec;
 
-public class AsymmetricKeyManage {
+public class AsymmetricKeyManage implements KeyManage {
     KeyPair keypair;
     PublicKey publicKey;
     PrivateKey privateKey;
@@ -28,20 +30,25 @@ public class AsymmetricKeyManage {
         return keypair;
     }
 
-    public PublicKey savePublicKey(String publicFileName) {
-        if (publicKey == null) {
-            return null;
-        }
-
-        try (FileOutputStream fstream = new FileOutputStream(publicFileName)) {
+    @Override
+    public Key save(String fileName, Key key) {
+        try (FileOutputStream fstream = new FileOutputStream(fileName)) {
             try (ObjectOutputStream ostream = new ObjectOutputStream(fstream)) {
-                ostream.writeObject(publicKey);
+                ostream.writeObject(key);
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return key;
+    }
+
+    public PublicKey savePublicKey(String publicFileName) {
+        if (publicKey == null) {
+            return null;
+        }
+        save(publicFileName, publicKey);
         return publicKey;
     }
 
@@ -49,18 +56,11 @@ public class AsymmetricKeyManage {
         if (privateKey == null) {
             return null;
         }
-        try (FileOutputStream fstream = new FileOutputStream(privateFileName)) {
-            try (ObjectOutputStream ostream = new ObjectOutputStream(fstream)) {
-                ostream.writeObject(privateKey);
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        save(privateFileName, privateKey);
         return privateKey;
     }
 
+    @Override
     public Key load(String fileName) {
         Key key = null;
         try (FileInputStream fis = new FileInputStream(fileName)) {
@@ -78,16 +78,17 @@ public class AsymmetricKeyManage {
         return key;
     }
 
+    @Override
     public Key bytesToKey(byte[] byteKey) {
         Key key = null;
-        try (ByteArrayInputStream bis = new ByteArrayInputStream(byteKey);
-             ObjectInput in = new ObjectInputStream(bis)) {
-            key = (Key) in.readObject();
-        } catch (IOException e) {
+        try {
+            key = KeyFactory.getInstance("RSA").generatePublic(new X509EncodedKeySpec(byteKey));
+        } catch (InvalidKeySpecException e) {
             throw new RuntimeException(e);
-        } catch (ClassNotFoundException e) {
+        } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
         return key;
     }
+
 }
