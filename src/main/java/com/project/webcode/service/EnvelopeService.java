@@ -12,10 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.crypto.spec.SecretKeySpec;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
-import java.security.spec.X509EncodedKeySpec;
 import java.util.List;
 
 @Service
@@ -35,9 +33,11 @@ public class EnvelopeService {
         // sender의 key load
         Member sender = memberRepository.findByName(envelopeReq.getSender());
 
+        // 로컬에서 secret key load
         SymmetricKeyManage skm = new SymmetricKeyManage();
         Key secretKey = skm.load(sender.getSecretKeyPath());
 
+        // 로컬에서 public key, private key load
         AsymmetricKeyManage akm = new AsymmetricKeyManage();
         Key publicKey = akm.load(sender.getPublicKeyPath());
         Key privateKey = akm.load(sender.getPrivateKeyPath());
@@ -47,6 +47,7 @@ public class EnvelopeService {
         byte[] bPublicKey = publicKeysRepository.findPublicKey(receiver.getName());
         PublicKey publicKeyB = (PublicKey) akm.bytesToKey(bPublicKey);
 
+        // 원본 데이터
         DigitalSignatureManage dsm = new DigitalSignatureManage();
         String message = envelopeReq.getMessage();
         byte[] data = message.getBytes();
@@ -60,7 +61,7 @@ public class EnvelopeService {
         byte[] encrypted2 = dem.encrypt(signature, secretKey);
         byte[] encrypted3 = dem.encrypt(publicKey.getEncoded(), secretKey);
 
-        // secret key 암호화
+        // secret key 암호화 (전자봉투)
         byte[] encrypted4 = dem.encrypt(secretKey.getEncoded(), publicKeyB);
 
         // 전자봉투 보내기 (서버에 저장)

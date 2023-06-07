@@ -1,7 +1,6 @@
 package com.project.webcode.util;
 
 import java.security.Key;
-import java.security.PublicKey;
 
 public interface KeyManage {
 

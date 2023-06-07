@@ -11,8 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Key;
-import java.security.KeyPair;
 import java.security.PublicKey;
 
 @RequiredArgsConstructor

@@ -1,13 +1,10 @@
 package com.project.webcode.domain;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.boot.context.properties.ConstructorBinding;
 
 import javax.persistence.*;
-import java.security.PublicKey;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
