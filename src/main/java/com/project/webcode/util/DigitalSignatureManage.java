@@ -3,7 +3,7 @@ package com.project.webcode.util;
 import java.security.*;
 
 public class DigitalSignatureManage {
-    String signAlgorithm;
+    String signAlgorithm = "SHA256WithRSA";
 
     public byte[] create(byte[] data, PrivateKey privateKey) {
         return create(data, privateKey, "SHA256WithRSA");
