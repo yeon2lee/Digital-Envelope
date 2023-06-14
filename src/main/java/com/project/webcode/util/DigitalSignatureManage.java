@@ -1,5 +1,7 @@
 package com.project.webcode.util;
 
+import com.project.webcode.VerificationFailedException;
+
 import java.security.*;
 
 public class DigitalSignatureManage {
@@ -29,7 +31,7 @@ public class DigitalSignatureManage {
     }
 
 
-    public boolean verify(byte[] data, byte[] signature, PublicKey publicKey) {
+    public boolean verify(byte[] data, byte[] signature, PublicKey publicKey) throws VerificationFailedException {
         Signature sig;
         boolean rslt = false;
         try {
@@ -44,6 +46,11 @@ public class DigitalSignatureManage {
         } catch (InvalidKeyException e) {
             e.printStackTrace();
         }
+
+        if (rslt == false) {
+            throw new VerificationFailedException();
+        }
+
         return rslt;
     }
 

@@ -6,17 +6,14 @@ import javax.persistence.*;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Getter
-@Builder
+@Getter @Builder
 @Entity
 public class Member  {
-
     @Id @GeneratedValue
     @Column(name = "member_id")
     private Long id;
 
     private String name;
-
     private String secretKeyPath;
     private String publicKeyPath;
     private String privateKeyPath;

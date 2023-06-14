@@ -34,7 +34,6 @@ public class MemberService  {
         akm.savePrivateKey(keyGenerateReq.getPrivateKeyPath());
         PublicKey publicKey = akm.savePublicKey(keyGenerateReq.getPublicKeyPath());
 
-
         // Member 테이블에 사용자가 로컬에 키를 저장한 경로를 등록 (서버에 저장)
         Member member = memberRepository.save(keyGenerateReq.toEntity());
 

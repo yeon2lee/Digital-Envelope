@@ -1,5 +1,6 @@
 package com.project.webcode.service;
 
+import com.project.webcode.VerificationFailedException;
 import com.project.webcode.domain.Envelope;
 import com.project.webcode.domain.EnvelopeReq;
 import com.project.webcode.domain.EnvelopeRes;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -87,6 +89,7 @@ public class EnvelopeService {
         // Bytes to Key
         SymmetricKeyManage skm = new SymmetricKeyManage();
         Key secretKey = skm.bytesToKey(bSecretKey);
+        Arrays.fill(bSecretKey, (byte)0);
 
         // 암호문 복호화
         byte[] data = dem.decrypt(envelope.getData(), secretKey);
@@ -96,7 +99,12 @@ public class EnvelopeService {
 
         // 검증
         DigitalSignatureManage dsm = new DigitalSignatureManage();
-        boolean verify = dsm.verify(data, signature, publicKey);
+        boolean verify = false;
+        try {
+            verify = dsm.verify(data, signature, publicKey);
+        } catch (VerificationFailedException e) {
+            e.printStackTrace();
+        }
 
         EnvelopeRes envelopeRes = new EnvelopeRes(envelope.getSender().getName(), envelope.getReceiver().getName(), new String(data), verify);
 

@@ -1,6 +1,8 @@
 package com.project.webcode.controller;
 
 import com.project.webcode.domain.*;
+import com.project.webcode.domain.EnvelopeReq;
+import com.project.webcode.domain.EnvelopeRes;
 import com.project.webcode.service.EnvelopeService;
 import com.project.webcode.service.MemberService;
 import lombok.RequiredArgsConstructor;
