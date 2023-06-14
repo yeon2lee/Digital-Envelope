@@ -1,13 +1,16 @@
 package com.project.webcode.util;
 
 import javax.crypto.*;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.security.InvalidKeyException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 
 public class DigitalEnvelopeManage {
     private Key secretKey;
-
 
     public byte[] encrypt(byte[] data, Key key) {
         byte[] encrypted = null;
@@ -47,4 +50,5 @@ public class DigitalEnvelopeManage {
         }
         return decrypted;
     }
+
 }
